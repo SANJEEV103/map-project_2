@@ -1,0 +1,37 @@
+[
+    {
+        "email": "raj.kumar@example.com",
+        "password": "raj1234",
+        "role": "admin",
+        "name": "Raj Kumar",
+        "country": "India"
+    },
+    {
+        "email": "priya.singh@example.com",
+        "password": "priya5678",
+        "role": "admin",
+        "name": "Priya Singh",
+        "country": "India"
+    },
+    {
+        "email": "john.doe@example.com",
+        "password": "john1234",
+        "role": "user",
+        "name": "John Doe",
+        "country": "USA"
+    },
+    {
+        "email": "emily.jones@example.com",
+        "password": "emily1234",
+        "role": "user",
+        "name": "Emily Jones",
+        "country": "UK"
+    },
+    {
+        "email": "manoj.patel@example.com",
+        "password": "manoj4321",
+        "role": "user",
+        "name": "Manoj Patel",
+        "country": "India"
+    }
+]
