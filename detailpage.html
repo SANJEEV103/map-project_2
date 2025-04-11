@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Polling Station Statistics</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Basic reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* General styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      color: #333;
+    }
+
+    /* Navbar styling */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      background-color: #333;
+      padding: 1em;
+      color: #fff;
+    }
+
+    .navbar a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 1em;
+    }
+
+    /* Village name styling */
+    .village-name {
+      text-align: center;
+      font-size: 1.5em;
+      margin: 1em 0;
+      color: #333;
+    }
+
+    /* Main container styling */
+    .container {
+      width: 90%;
+      margin: auto;
+    }
+
+    /* Flex containers */
+    .flex-container {
+      display: flex;
+      gap: 1em;
+      flex-wrap: wrap;
+      margin-bottom: 1.5em;
+      justify-content: center;
+
+    }
+
+    .card-statics, .chart-container {
+      flex: 1;
+      min-width: 280px;
+      padding: 1em;
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    /* Chart container */
+    .chart-container {
+      position: relative;
+      height: 200px;
+      justify-content: center;
+    }
+
+    .card-statics h3 {
+      font-size: 1.2em;
+      margin-bottom: 0.5em;
+      display: flex;
+      align-items: center;
+    }
+
+    .card-statics h3 i {
+      margin-right: 0.5em;
+      color: #3f4143;
+    }
+
+    @media (max-width: 768px) {
+      .flex-container {
+        flex-direction: column;
+      }
+    }
+      .list-users {
+      width: 100%;
+      max-width: 1200px;
+      padding: 20px;
+      background-color: #f5f5f5;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      font: size 20px;;
+  
+    }
+
+    .card {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      animation: fadeIn 0.5s ease-in-out;
+      transition: transform 0.3s ease;
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .result-info {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: #fff;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .result-info.win {
+      background-color: #4CAF50;
+    }
+
+    .result-info.lost {
+      background-color: #f44336;
+    }
+
+    .profile-info {
+      display: flex;
+      align-items: center;
+    }
+
+    .profile-img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 15px;
+      background-color: #ddd;
+    }
+
+    .profile-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profile-details h4 {
+      margin: 0;
+      font-size: 1em;
+      color: #333;
+    }
+
+    .profile-details p {
+      margin: 2px 0 0;
+      font-size: 0.9em;
+      color: #777;
+    }
+    .chart-container {
+  height: 300px; 
+  width: 500px;  
+}
+
+.card-statics {
+  padding: 1em; 
+  background: #fff; 
+  border-radius: 8px; 
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+}
+
+.card-statics h3 {
+  font-size: 1.5em; 
+  color: #333; 
+  margin-bottom: 0.5em; 
+}
+
+.card-statics p {
+  font-size: 1.2em; 
+  color: #666; 
+  line-height: 1.4;
+}
+
+.card-statics i {
+  font-size: 1.5em;
+  margin-right: 0.5em; 
+}
+.statistics-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px;
+}
+
+.card-statics {
+  flex-basis: 20%; 
+  text-align: center;
+  color: white;
+  border-radius: 10px;
+  padding: 20px;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.card-statics h3 {
+  font-size: 4.2rem;
+  margin-bottom: 15px;
+}
+
+.card-statics p {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.bjp {
+  background-color: #FF9933; 
+}
+
+.inc {
+  background-color: #33B2FF; 
+}
+
+.inld {
+  background-color: #FF3333; /* INLD's color */
+}
+
+.ind {
+  background-color: #669966; /* IND's color */
+}
+
+
+
+    /* Scrollbar Styling */
+    .list-users::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .list-users::-webkit-scrollbar-thumb {
+      background-color: #888;
+      border-radius: 4px;
+    }
+    .chart-containers {
+  width: 100%; 
+  
+}
+
+
+    /* Animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Layout */
+    @media (min-width: 768px) {
+      .card {
+        flex: 1 1 45%;
+        max-width: 45%;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .card {
+        flex: 1 1 30%;
+        max-width: 30%;
+      }
+    }
+  </style>
+      <script defer src="navbar.js"></script>
+
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div id="navbar-placeholder"></div>
+  <script>
+      // Call the addNavbar function after the DOM is fully loaded
+      window.onload = () => addNavbar('navbar-placeholder');
+  </script>
+  <!-- Village Name -->
+  <div class="village-name">
+    <h2> Hajipur, Mahnar </h2>
+  </div>
+
+  <!-- Main Container -->
+  <div class="container">
+
+    <!-- Voter Statistics and Line Chart -->
+    <div class="flex-container">
+
+      <div class="statistics-container">
+        <div class="card-statics bjp">
+          Total: 1177
+        </div>
+        <div class="card-statics inc">
+          Male : 579
+        </div>
+        <div class="card-statics inld">
+          Female : 598
+        </div>
+      </div>
+    </div>
+
+      <div class="flex-container">
+        
+      </div>
+
+    <!-- Additional Statistics -->
+    <div class="flex-container">
+
+    <div class="chart-container">
+          <canvas id="ageDistributionChart"></canvas>
+    </div>
+
+      <div class="chart-container">
+        <canvas id="genderDistributionChart"></canvas>
+      </div>
+      <div class="chart-container">
+        <canvas id="lineChart"></canvas>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="list-users" id="list-users"></div>
+  <script>
+    // Data Variables
+    const totalVoters = 1177;
+    const maleCount = 579;
+    const femaleCount = 598;
+    const ageGroups = {
+      "18-24": 110,
+      "25-34": 272,
+      "35-44": 274,
+      "45-60": 247,
+      "60+": 188
+    };
+
+    // Chart.js Configurations
+
+    // Line Chart for Age Distribution
+    const lineCtx = document.getElementById('lineChart').getContext('2d');
+    const lineChart = new Chart(lineCtx, {
+      type: 'line',
+      data: {
+        labels: Object.keys(ageGroups),
+        datasets: [{
+          label: 'Voter Age Distribution',
+          data: Object.values(ageGroups),
+          borderColor: 'rgba(75, 192, 192, 1)',
+          backgroundColor: 'rgba(75, 192, 192, 1)',
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      }
+    });
+
+    // Bar Chart for Age Distribution
+    const ageDistCtx = document.getElementById('ageDistributionChart').getContext('2d');
+    new Chart(ageDistCtx, {
+      type: 'bar',
+      data: {
+        labels: Object.keys(ageGroups),
+        datasets: [{
+          label: 'Age Group Distribution',
+          data: Object.values(ageGroups),
+          backgroundColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top'
+          }
+        }
+      }
+    });
+
+    // Doughnut Chart for Gender Distribution
+    const genderDistCtx = document.getElementById('genderDistributionChart').getContext('2d');
+    new Chart(genderDistCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Male', 'Female'],
+        datasets: [{
+          data: [maleCount, femaleCount],
+          backgroundColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+          borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top'
+          }
+        }
+      }
+    });
+    
+    const data = [
+      {
+        "id": 1,
+        "status": "Wn",
+        "votes":"" ,
+        "profileImage": "https://via.placeholder.com/50",
+        "name": "Anil Kumar Shah",
+        "gender":"Male",
+        "Category":"EBC",
+        "Age": "61",
+        "party": "MUKHIYA"
+      },
+      {
+        "id": 2,
+        "status": "Wn",
+        "votes": 567,
+        "profileImage": "https://via.placeholder.com/50",
+        "name": "Ram Bhajan Singh",
+        "gender":"Male",
+        "Category":"EBC",
+        "Age": "44",
+        "party": "SARPANCH"
+      },
+      {
+        "id": 3,
+        "status": "W",
+        "votes": 980,
+        "profileImage": "https://via.placeholder.com/50",
+        "name": "Kailash Rai",
+        "gender":"Male",
+        "Category":"EBC",
+        "Age": "62",
+        "party": "PANCHAYAT SAMITI"
+      },
+        
+    ];
+
+    function loadCards() {
+      const container = document.getElementById('list-users');
+      data.forEach(item => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+
+        // Result Info
+        const resultInfo = document.createElement('div');
+        resultInfo.classList.add('result-info', item.status.toLowerCase());
+        resultInfo.innerHTML = `<span>${item.status}</span><span>${item.votes}</span>`;
+        card.appendChild(resultInfo);
+
+        // Profile Info
+        const profileInfo = document.createElement('div');
+        profileInfo.classList.add('profile-info');
+
+        const profileImg = document.createElement('img');
+        profileImg.classList.add('profile-img');
+        profileImg.src = item.profileImage;
+        profileImg.alt = item.name;
+
+        const profileDetails = document.createElement('div');
+        profileDetails.classList.add('profile-details');
+        profileDetails.innerHTML = `<h2>${item.name}</h2> <span>${item.gender}</span> <span>${item.Category}</span> <span>${item.Age}</span> <p>${item.party}</p>`;
+
+        profileInfo.appendChild(profileImg);
+        profileInfo.appendChild(profileDetails);
+        card.appendChild(profileInfo);
+
+        container.appendChild(card);
+      });
+    }
+
+    // Load cards on page load
+    window.onload = loadCards;
+  </script>
+</body>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Map and Table</title>
+      <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+<script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+    <!-- Map Section -->
+    <div class="map-container">
+  <div class="tile-switcher">
+    <button class="dropdown-button">
+      <i class="fas fa-map"></i> Select Map View
+    </button>
+    <div class="dropdown-content">
+      <button onclick="switchTile('roadmap')">Roadmap</button>
+      <button onclick="switchTile('terrain')">Terrain</button>
+      <button onclick="switchTile('alteredRoadmap')">Altered Roadmap</button>
+      <button onclick="switchTile('satellite')">Satellite</button>
+      <button onclick="switchTile('terrainOnly')">Political</button>
+      <button onclick="switchTile('hybrid')">Hybrid</button>
+      <button onclick="switchTile('aquarelle')">Aquarelle</button>
+      <button onclick="switchTile('toner')">Toner</button>
+      <button onclick="switchTile('Bright')">Bright</button>
+    </div>
+  </div>
+  <div id="map"></div>
+</div>
+<div class="table-container">
+    <div class="table-controls">
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <input type="text" placeholder="Search...">
+            <button class="search-btn"><i class="fas fa-search"></i></button>
+        </div>
+        
+        <!-- Filter Dropdown -->
+        <div class="filter-dropdown">
+            <select>
+                <option value="">Filter by...</option>
+                <option value="age">Age Group</option>
+                <option value="gender">Gender</option>
+                <option value="location">Location</option>
+                <option value="voterCount">Voter Count</option>
+            </select>
+        </div>
+        <div class="bars-my">
+            <a href="/chart.html"><button class="my-buttons">chart view</button></a>           
+            <a href="/detail.html"><button class="my-buttons">detail view</button></a>
+        </div>
+    </div>
+    
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Part No</th>
+                <th>Polling Station</th>
+                <th>Total Voters</th>
+                <th>Male Count</th>
+                <th>Female Count</th>
+                <th>Male Percentage</th>
+                <th>Female Percentage</th>
+                <th>Age 18-24</th>
+                <th>Age 25-34</th>
+                <th>Age 35-44</th>
+                <th>Age 45-60</th>
+                <th>Age 60+</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data Rows will be populated here -->
+        </tbody>
+    </table>
+
+</div>
+<script src="https://unpkg.com/leaflet-omnivore@0.3.4/leaflet-omnivore.min.js"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

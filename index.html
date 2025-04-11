@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Login Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #141e30, #243b55);
+            color: #fff;
+            overflow: hidden;
+        }
+
+        /* Neon Glow Effect */
+        .login-container {
+            width: 400px;
+            background: rgba(20, 30, 48, 0.9);
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(58, 123, 213, 0.4), 0 0 40px rgba(58, 123, 213, 0.6);
+            text-align: center;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .login-container h2 {
+            font-size: 2rem;
+            color: #6ec1e4;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .login-container h2::after {
+            content: "";
+            width: 60px;
+            height: 3px;
+            background: #6ec1e4;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+            box-shadow: 0 0 8px #6ec1e4, 0 0 10px #6ec1e4;
+        }
+
+        /* Form Styling */
+        .login-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6ec1e4;
+        }
+
+        input[type="email"], input[type="password"], select {
+            width: 100%;
+            padding: 0.8rem 0.8rem 0.8rem 2.5rem;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            transition: 0.3s;
+            font-size: 1rem;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 0 10px rgba(110, 193, 228, 0.5);
+        }
+
+        input[type="email"]:focus, input[type="password"]:focus, select:focus {
+            box-shadow: 0 0 8px #6ec1e4, 0 0 10px #6ec1e4;
+        }
+
+        /* Extra Links */
+        .extra-links {
+            display: flex;
+            justify-content: space-between;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .extra-links a {
+            color: #6ec1e4;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .extra-links a:hover {
+            color: #fff;
+        }
+
+        /* Login Button */
+        .login-btn {
+            background: linear-gradient(135deg, #6ec1e4, #4a69bd);
+            color: #fff;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.3s;
+            margin-top: 0.5rem;
+            box-shadow: 0 0 10px #6ec1e4, 0 0 20px #4a69bd;
+        }
+
+        .login-btn:hover {
+            background: linear-gradient(135deg, #4a69bd, #6ec1e4);
+            box-shadow: 0 0 15px #4a69bd, 0 0 25px #6ec1e4;
+        }
+
+        /* Fade-In Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            .login-container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <h2>Login</h2>
+    <form onsubmit="return validateForm()">
+        <!-- Email Field -->
+        <div class="form-group">
+            <i class="fas fa-envelope"></i>
+            <input type="email" id="email" placeholder="Email" required>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="password" placeholder="Password" required>
+        </div>
+
+        <!-- Role Selection -->
+        <div class="form-group">
+            <i class="fas fa-user-tag"></i>
+            <select id="role" required>
+                <option value="">Select Role</option>
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+            </select>
+        </div>
+
+        <!-- Extra Links -->
+        <div class="extra-links">
+            <a href="#">Forgot Password?</a>
+            <a href="#">Sign Up</a>
+        </div>
+
+        <!-- Login Button -->
+        <button type="submit" class="login-btn">Login</button>
+    </form>
+</div>
+
+<script>
+    // Function to validate the form and check credentials
+function validateForm() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    if (!email || !password) {
+        alert('Please fill in both email and password');
+        return false;
+    }
+
+    // Fetch users from users.json
+    fetch('./assets/users.json')
+        .then(response => response.json())
+        .then(users => {
+            // Find user in the fetched data
+            const user = users.find(u => u.email === email && u.password === password);
+
+            // Check if user is found
+            if (user) {
+                // Store login state in localStorage
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('role', user.role);
+
+                // Redirect based on user role
+                if (user.role === 'user') {
+                    window.location.href = 'client.html'; // Redirect to user page
+                } else if (user.role === 'admin') {
+                    window.location.href = 'admin.html'; // Redirect to admin page
+                }
+            } else {
+                alert('Invalid email or password');
+                localStorage.setItem('isLoggedIn', 'false');
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching users:', error);
+            alert('Error validating user');
+            localStorage.setItem('isLoggedIn', 'false');
+        });
+
+    return false; // Prevent form submission to keep the page from reloading
+}
+
+// Function to check if the user is logged in on page load
+function checkLoginStatus() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    const role = localStorage.getItem('role');
+
+    if (isLoggedIn === 'true') {
+        // Redirect based on the user's role
+        if (role === 'user') {
+            window.location.href = 'client.html'; // User already logged in, redirect to user page
+        } else if (role === 'admin') {
+            window.location.href = 'admin.html'; // Admin already logged in, redirect to admin page
+        }
+    } else {
+        // Optionally handle when the user is not logged in
+        console.log('User is not logged in');
+    }
+}
+
+// Call checkLoginStatus when the page loads to validate login state
+ window.onload = checkLoginStatus;
+</script>
+
+</body>
+</html>
